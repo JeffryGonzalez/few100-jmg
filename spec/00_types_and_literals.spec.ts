@@ -1,3 +1,5 @@
+import { domainToASCII } from 'url';
+
 describe('declaring variables', () => {
     describe('using let', () => {
         it('declaring a variable with let', () => {
@@ -182,6 +184,87 @@ The end.`;
             };
             expect(subtract(10, 2)).toBe(8);
             expect(multiply(10, 2)).toBe(20);
+        });
+    });
+    describe('object literals', () => {
+        it('has them', () => {
+
+            type MPAARating = 'G' | 'PG' | 'PG-13' | 'R' | 'NC-17';
+            interface Movie {
+                title: string;
+                director: string;
+                yearReleased: number;
+                MPAARating?: MPAARating;
+                [key: string]: any;
+            }
+
+            const movie: Movie = {
+                title: 'Thor Ragnorak',
+                director: 'Taika Waititi',
+                yearReleased: 2016
+            };
+
+            expect(movie.title).toBe('Thor Ragnorak');
+            // tslint:disable-next-line: no-string-literal
+            expect(movie['title']).toBe('Thor Ragnorak');
+
+            movie.yearReleased = 2017;
+
+            movie.MPAARating = 'PG-13';
+            movie.MPAARating = 'R';
+            movie.cast = ['Chris Hemsworth', 'Tom Hiddleston', 'Mark Ruffalo'];
+            movie.watched = true;
+        });
+        it('making a dictionary', () => {
+
+            interface Vehicle {
+                vin: string;
+                make: string;
+                model: string;
+                year: number;
+            }
+
+            interface Dictionary<T> {
+                [key: string]: T;
+            }
+
+
+
+            const myVehicles: Dictionary<Vehicle> = {
+                '83989sjioe': {
+                    vin: '83989sjioe',
+                    make: 'Chevy',
+                    model: 'Bolt',
+                    year: 2018
+                },
+                xyzpdq: {
+                    vin: 'xyzpdq',
+                    make: 'Honda',
+                    model: 'Pilot',
+                    year: 2019
+                }
+
+            };
+
+            expect(myVehicles['83989sjioe'].make).toBe('Chevy');
+        });
+        it('duck typing', () => {
+            interface ThingWithMessage {
+                message: string;
+            }
+            function doSomething(thing: ThingWithMessage) {
+                console.log(thing.message);
+            }
+
+            doSomething({ message: 'Call your Mom' });
+
+            const phoneCall = {
+                from: 'Sue',
+                time: 'AM',
+                message: 'Call Me back'
+            };
+
+            doSomething(phoneCall);
         });
     });
 });
