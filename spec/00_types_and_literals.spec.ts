@@ -119,5 +119,69 @@ The end.`;
 
 
         });
+
+        it('has array literals', () => {
+            const luckyNumbers = [9, 20, 108];
+            expect(luckyNumbers[0]).toBe(9);
+            luckyNumbers[999] = 50;
+
+            expect(luckyNumbers[100]).toBeUndefined();
+
+            let friends: string[];
+
+            friends = ['Bill', 'Beth'];
+
+            let someArray: (string | number)[];
+            someArray = [99, 'dog', 'cat', 42];
+
+            const p = someArray[3];
+
+            let someArray2: Array<string | number>;
+
+        });
+        it('intro to tuples', () => {
+
+            type SettingOption = 'log' | 'warn' | 'trace';
+            type Setting = [boolean, SettingOption, SettingOption, SettingOption];
+
+            let setting: Setting;
+
+            setting = [true, 'log', 'warn', 'trace'];
+
+            // setting = ['dog', false]; // won't compile
+            const isSet = setting[0];
+
+            const allowLog = setting[1];
+
+
+        });
+    });
+
+    describe('function literals', () => {
+        it('three different ways to declare a function - plus methods in a class we will do later', () => {
+
+            expect(add(10, 2)).toBe(12);
+            // Named Function
+            function add(a: number, b: number): number {
+                return a + b;
+            }
+            // 'Anonymous Functions'
+
+            const subtract = function (a: number, b: number): number {
+                return a - b;
+            };
+
+            const multiply = (a: number, b: number): number => a * b;
+
+            const divide = (a: number, b: number): number => {
+                if (b === 0) {
+                    throw new Error('Are you trying to open a black hole!?');
+                } else {
+                    return a / b;
+                }
+            };
+            expect(subtract(10, 2)).toBe(8);
+            expect(multiply(10, 2)).toBe(20);
+        });
     });
 });
