@@ -1,4 +1,4 @@
-import { isEven } from './utils';
+import { isEven, formatter, identity, jesseDecorator } from './utils';
 
 
 describe('functions', () => {
@@ -144,6 +144,28 @@ describe('array methods', () => {
 
             const total2 = numbers.reduce((c, n) => c + n, 100);
             expect(total2).toBe(145);
+        });
+    });
+
+    describe('some more higher order functions', () => {
+        describe('a function that takes a function as an argument', () => {
+            it('a kind of decorator', () => {
+                const response = formatter('Hello World!', identity);
+                expect(response).toBe('HELLO_WORLD!');
+
+                const response2 = formatter('Hello World!');
+                expect(response2).toBe('HELLO_WORLD!');
+
+                const jesseresponse = formatter('Hello World!', (s) => `***${s}***`);
+                expect(jesseresponse).toBe('***HELLO_WORLD!***');
+
+                const bangSurround = jesseDecorator('!');
+                const jr2 = formatter('Hello World!', bangSurround);
+                expect(jr2).toBe('!!!HELLO_WORLD!!!!');
+
+                const jr3 = formatter('Hello World!', jesseDecorator('@'));
+                expect(jr3).toBe('@@@HELLO_WORLD!@@@');
+            });
         });
     });
 });
